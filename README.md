@@ -1,5 +1,5 @@
-# DON'T YOU DARE
-Use this in production. Passwords might be hardcoded in various places. This is just to play around locally.
+# DON'T YOU DARE...
+...use this in production. Passwords might be hardcoded in various places. This is just to play around locally.
 
 # REQUIREMENTS
 Create an `.env` file and populate it with credentials. For example:
