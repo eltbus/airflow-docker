@@ -9,7 +9,8 @@ POSTGRES_PASSWORD="airflow"
 POSTGRES_DB="airflow"
 ```
 
-*WARNING*: If you're using a non `linux/amd64` platform also add the following to the `.env` file:
+*NOTE*: As of May 2024 the `postgres` requires the `linux/amd64` image version, which is now specified in the docker compose.
+You can also add the following env var to the `.env` file, but **it will affect all other images and may lead to poor performance**.
 ```
 DOCKER_DEFAULT_PLATFORM=linux/amd64
 ```

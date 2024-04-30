@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:latest
+    platform: linux/amd64
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -31,8 +32,6 @@ services:
 
   webserver:
     image: my-airflow:latest
-    build:
-      pull: false
     ports:
       - "8080:8080"
     entrypoint: ["sh", "-c", "airflow db migrate && airflow webserver"]
@@ -47,8 +46,6 @@ services:
 
   scheduler:
     image: my-airflow:latest
-    build:
-      pull: false
     command: ["scheduler"]
     networks:
       - airflow
@@ -60,8 +57,6 @@ services:
 
   worker:
     image: my-airflow:latest
-    build:
-      pull: false
     command: ["celery", "worker"]
     networks:
       - airflow
@@ -73,8 +68,6 @@ services:
 
   triggerer:
     image: my-airflow:latest
-    build:
-      pull: false
     command: ["triggerer"]
     networks:
       - airflow
