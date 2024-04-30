@@ -15,6 +15,14 @@ You can also add the following env var to the `.env` file, but **it will affect 
 DOCKER_DEFAULT_PLATFORM=linux/amd64
 ```
 
+# HOW TO
+Use the `Makefile`:
+
+- Edit the configuration files in `/config` to match your needs.
+- Use `make dry-run` to preview the run.
+- Use `make run` to build your airflow image with your configuration and spin up all the services. Build and run were split between `docker` and `docker compose` on purpose.
+- Use `make stop` to stop and remove the containers.
+
 # Airflow users
 Once deployed, it is necessary to create users. To do so `exec` into the webserver container with bash and create the user using the Airflow CLI
 
