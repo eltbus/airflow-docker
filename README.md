@@ -9,6 +9,11 @@ POSTGRES_PASSWORD="airflow"
 POSTGRES_DB="airflow"
 ```
 
+*WARNING*: If you're using a non `linux/amd64` platform also add the following to the `.env` file:
+```
+DOCKER_DEFAULT_PLATFORM=linux/amd64
+```
+
 # Airflow users
 Once deployed, it is necessary to create users. To do so `exec` into the webserver container with bash and create the user using the Airflow CLI
 
@@ -17,5 +22,11 @@ docker exec -it "$$(docker ps --format '{{.Names}}' | grep airflow-docker-webser
 ```
 And, in the container:
 ```
-airflow users create --username 'john.smith' --password 'admin' --firstname 'John' --lastname 'Smith' --role 'Admin' --email 'john.smith@foo.bar'
+airflow users create \
+    --username admin \
+    --password admin \
+    --firstname Peter \
+    --lastname Parker \
+    --role Admin \
+    --email spiderman@superhero.org
 ```
