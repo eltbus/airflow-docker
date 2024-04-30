@@ -30,9 +30,9 @@ services:
       retries: 50
 
   webserver:
+    image: my-airflow:latest
     build:
-      tags:
-        - "my-airflow:latest"
+      pull: false
     ports:
       - "8080:8080"
     entrypoint: ["sh", "-c", "airflow db migrate && airflow webserver"]
@@ -47,6 +47,8 @@ services:
 
   scheduler:
     image: my-airflow:latest
+    build:
+      pull: false
     command: ["scheduler"]
     networks:
       - airflow
@@ -58,6 +60,8 @@ services:
 
   worker:
     image: my-airflow:latest
+    build:
+      pull: false
     command: ["celery", "worker"]
     networks:
       - airflow
@@ -69,6 +73,8 @@ services:
 
   triggerer:
     image: my-airflow:latest
+    build:
+      pull: false
     command: ["triggerer"]
     networks:
       - airflow

@@ -1,8 +1,8 @@
 run:
-	@docker compose up --build --detach --pull never
+	@docker compose up --detach
 
 dry-run:
-	@docker compose up --build --detach --pull never --dry-run
+	@docker compose up --dry-run
 
 exec-airflow-webserver:
 	@docker exec -it "$$(docker ps --format '{{.Names}}' | grep 'airflow.*webserver')" bash || ""
