@@ -30,7 +30,9 @@ services:
       retries: 50
 
   webserver:
-    image: apache/airflow:latest
+    build:
+      tags:
+        - "my-airflow:latest"
     ports:
       - "8080:8080"
     entrypoint: ["sh", "-c", "airflow db migrate && airflow webserver"]
@@ -39,44 +41,40 @@ services:
     volumes:
       - logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags
-      - ./airflow.cfg:/opt/airflow/airflow.cfg
     depends_on:
       - postgres
       - redis
 
   scheduler:
-    image: apache/airflow:latest
+    image: my-airflow:latest
     command: ["scheduler"]
     networks:
       - airflow
     volumes:
       - logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags
-      - ./airflow.cfg:/opt/airflow/airflow.cfg
     depends_on:
       - webserver
 
   worker:
-    image: apache/airflow:latest
+    image: my-airflow:latest
     command: ["celery", "worker"]
     networks:
       - airflow
     volumes:
       - logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags
-      - ./airflow.cfg:/opt/airflow/airflow.cfg
     depends_on:
       - scheduler
 
   triggerer:
-    image: apache/airflow:latest
+    image: my-airflow:latest
     command: ["triggerer"]
     networks:
       - airflow
     volumes:
       - logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags
-      - ./airflow.cfg:/opt/airflow/airflow.cfg
     depends_on:
       - scheduler
 
