@@ -39,3 +39,7 @@ airflow users create \
     --role Admin \
     --email spiderman@superhero.org
 ```
+
+## PERMISSION FIX
+My setup in WSL2 complains about permissions a lot. Had to do the following to fix permissions:
+`sudo chown -hR $(whoami) dags/`

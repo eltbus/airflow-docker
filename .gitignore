@@ -1,4 +1,5 @@
 .env
 logs/
 data/
-dags/
+poetry.lock
+pyproject.toml
