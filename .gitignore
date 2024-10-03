@@ -1,5 +1,5 @@
 .env
 logs/
 data/
+dags/**/__pycache__
 poetry.lock
-pyproject.toml
