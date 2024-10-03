@@ -47,14 +47,44 @@ services:
     depends_on:
       - webserver
 
-  worker:
+  worker-1:
     image: my-airflow:latest
-    command: ["celery", "worker"]
+    command:
+      - "celery"
+      - "worker"
+      - "--autoscale=16,4"
+      - "--queues=default,worker-1"
+      - "--celery-hostname=worker-1@%h"
+      - "--skip-serve-logs"
     volumes:
       - logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags
     depends_on:
       - scheduler
+
+  worker-2:
+    image: my-airflow:latest
+    command:
+      - "celery"
+      - "worker"
+      - "--autoscale=16,4"
+      - "--queues=default,worker-2"
+      - "--celery-hostname=worker-2@%h"
+      - "--skip-serve-logs"
+    volumes:
+      - logs:/opt/airflow/logs
+      - ./dags:/opt/airflow/dags
+    depends_on:
+      - scheduler
+
+  flower:
+    image: my-airflow:latest
+    command: ["celery", "flower", "--port", "5555"]
+    ports:
+      - "5555:5555"
+    depends_on:
+      - worker-1
+      - worker-2
 
   triggerer:
     image: my-airflow:latest
