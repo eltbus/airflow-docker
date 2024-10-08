@@ -37,6 +37,7 @@ services:
     depends_on:
       - postgres
       - redis
+    restart: on-failure:3
 
   scheduler:
     image: my-airflow:latest
