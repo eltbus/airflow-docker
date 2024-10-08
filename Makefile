@@ -1,11 +1,8 @@
 build:
 	@docker build . -t my-airflow:latest
 
-run: build
-	@docker compose up --build
-
-exec-airflow-webserver:
-	@docker exec -it "$$(docker ps --format '{{.Names}}' | grep 'airflow.*webserver')" bash || ""
+run:
+	@docker compose up
 
 requirements:
 	@poetry update

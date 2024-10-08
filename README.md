@@ -1,5 +1,5 @@
-# DON'T YOU DARE...
-...use this in production. Passwords might be hardcoded in various places. This is just to play around locally.
+# GOAL
+Use it to to play around locally.
 
 # REQUIREMENTS
 Create an `.env` file and populate it with credentials. For example:
@@ -19,15 +19,14 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64
 Use the `Makefile`:
 
 - Edit the configuration files in `/config` to match your needs.
-- Use `make dry-run` to preview the run.
-- Use `make run` to build your airflow image with your configuration and spin up all the services. Build and run were split between `docker` and `docker compose` on purpose.
-- Use `make stop` to stop and remove the containers.
+- Use `make build` to build your airflow image with your configuration.
+- Use `make run` spin up all the services.
 
-# Airflow users
-Once deployed, it is necessary to create users. To do so `exec` into the webserver container with bash and create the user using the Airflow CLI
+## Airflow users
+Once deployed, it is necessary to create at least one user to be able to log in.
 
 ```bash
-docker exec -it "$$(docker ps --format '{{.Names}}' | grep airflow-docker-webserver)" bash
+docker exec -it "$$(docker ps --format '{{.Names}}' | grep webserver)" bash
 ```
 And, in the container:
 ```
@@ -40,6 +39,7 @@ airflow users create \
     --email spiderman@superhero.org
 ```
 
-## PERMISSION FIX
+# KNOWN ISSUES
+## WSL2
 My setup in WSL2 complains about permissions a lot. Had to do the following to fix permissions:
 `sudo chown -hR $(whoami) dags/`
